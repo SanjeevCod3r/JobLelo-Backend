@@ -120,7 +120,51 @@ export const logout = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
     try{
-       
+        const { fullname, email, phoneNumber, bio, skills } = req.body;
+        const file = req.file;
+        if (!fullname || !email || !phoneNumber || !bio || !skills) {
+            return res.status(400).json({ message: "All fields are required", success: false });
+        };
+
+        // cloudinary aayega idhar
+
+
+        const skillsArray = skills.split(",");
+        const userId = req.id; // middleware auth
+
+        let user = await User.findById(userId);
+        if (!user) {
+            return res.status(400).json({ message: "User not found", success: false });
+        }
+
+         // Updating the profile
+        user.fullname = fullname;
+        user.email = email;
+        user.phoneNumber = phoneNumber;
+        user.profile.bio = bio;
+        user.profile.skills = skillsArray;
+
+        // Resume come here later......
+
+
+        await user.save();
+
+        user = {
+            _id: user._id,
+            fullname: user.fullname,
+            email: user.email,
+            phoneNumber: user.phoneNumber,
+            role: user.role,
+            profile: user.profile
+        };
+        
+        return res.status(200).json({
+            message: "Profile updated successfully.",
+            user,
+            success: true
+        });
+
+
     }
     catch(err){
        console.log(err);
