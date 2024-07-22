@@ -102,3 +102,27 @@ export const login = async (req, res) => {
     console.log(err);
   }
 };
+
+
+// Logout Logic --->
+export const logout = async (req, res) => {
+    try {
+        return res.status(200).cookie("token", "", { maxAge: 0 }).json({
+            message: "Logged out successfully",
+            success: true
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// Update Profile Logic --->
+
+export const updateProfile = async (req, res) => {
+    try{
+       
+    }
+    catch(err){
+       console.log(err);
+    }
+}
