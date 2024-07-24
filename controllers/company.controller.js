@@ -58,15 +58,15 @@ export const getCompanyById = async (req, res) => {
     }
 }
 
-export const updateCompanyInformation = async (req, res) => {
+export const updateCompany = async (req, res) => {
     try {
         const { name, description, website, location } = req.body;
         const file = req.file; 
 
         // idr cloudinary aayega
 
-        
-        const updateData = { name, description, website, location , logo};
+
+        const updateData = { name, description, website, location };
 
         const company = await Company.findByIdAndUpdate(req.params.id, updateData, { new: true });
 
